@@ -28,8 +28,8 @@ class Cells:
                 n for n in [
                     (c[0]-1,c[1]),(c[0],c[1]-1),
                     (c[0]+1,c[1]),(c[0],c[1]+1),
-                    (c[0]-1,c[1]-1),(c[0]-1,c[1]-1),
-                    (c[0]+1,c[1]+1),(c[0]+1,c[1]+1)
+                    (c[0]-1,c[1]-1),(c[0]+1,c[1]-1),
+                    (c[0]+1,c[1]+1),(c[0]-1,c[1]+1)
                 ]
                 if n in self.cells
             ])
@@ -65,24 +65,22 @@ class Cells:
         self.cells = next_gen
         self.cycles += 1
 
-    def _normalize(self, origin=0):
+    def normalize(self, dx=0, dy=0):
         """ normalize cell coordinates """
-        x_r, y_r = self.range2d()
-        x_of = origin - x_r.start
-        y_of = origin - y_r.start
-        self.cells = [(x + x_of, y + y_of) for (x, y) in self.cells]
+        return [(x + dx, y + dy) for (x, y) in self.cells]
         
     def __str__(self):
-        self._normalize(2)
+        xr, yr = self.range2d()
+        nmz = self.normalize(2 - xr.start, 2 - yr.start)
         x_r, y_r = self.range2d(2)
         
         str_r = '\n\n'
         for y in y_r:
             for x in x_r:
-                if (x, y) in self.cells:
-                    str_r += '\u2612'
+                if (x, y) in nmz:
+                    str_r += 'X'
                 else:
-                    str_r += '\u2610'
+                    str_r += 'O'
             str_r += '\n'
 
         return str_r
