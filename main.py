@@ -28,8 +28,6 @@ def main(stdscr):
         cs.next()
         time.sleep(1)
 
-    # print(cs.init_cells, cs.cycles)    
-
 if __name__ == "__main__":        
     wrapper(main)
 
