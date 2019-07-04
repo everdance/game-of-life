@@ -4,15 +4,17 @@ import life
 
 def draw_life(screen, c):
     xr, yr = c.range2d()
-    max_col_row = max(xr.stop - xr.start, yr.stop - yr.start, 20)
-    screen.resize(max_col_row+2, max_col_row+2)
+    max_row = max(yr.stop - yr.start, 20)
+    max_col = max(xr.stop - xr.start, 40)
+    screen.resize(max_row+2, max_col+2)
     screen.border()
-    off_x = max(0, xr.stop - max_col_row)
-    off_y = max(0, yr.stop - max_col_row)
     
+    off_x = max(0, xr.stop - max_col)
+    off_y = max(0, yr.stop - max_row)
     nmz_cells = c.normalize(off_x, off_y)
-    for i in range(0, max_col_row):
-        for j in range(0, max_col_row):
+
+    for i in range(0, max_row):
+        for j in range(0, max_col):
             ch = "X" if (i, j) in nmz_cells else 'O'
             attr = A_STANDOUT if (i, j) in nmz_cells else A_DIM
             screen.addch(i+1, j+1, ch, attr)
